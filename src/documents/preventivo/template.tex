@@ -1,0 +1,124 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage{textcomp}
+\usepackage[scaled=.95]{helvet}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\geometry{margin=2.2cm}
+\graphicspath{{.}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=black
+}
+
+% ---------- Brand Colors ----------
+\definecolor{ekoTeal}{HTML}{0B5C63}
+\definecolor{ekoGold}{HTML}{F2B744}
+\definecolor{ekoGray}{HTML}{5A6B70}
+\definecolor{rowGray}{RGB}{247,249,250}
+
+% ---------- Header / Footer ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{EKO Impianti Elettrici di Edmond Xhani}}
+\rhead{\textcolor{ekoGray}{Preventivo impianto elettrico}}
+\cfoot{\thepage/\pageref{LastPage}}
+
+% ---------- Columns ----------
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}p{3cm}}
+
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% ====== Header Block ======
+\begin{minipage}[t]{0.62\textwidth}
+  \textcolor{ekoTeal}{\LARGE <<<TITOLO>>>}\\[1mm]
+  \textbf{Tipologia:} <<<TIPOLOGIA>>>\\
+  \textbf{Località:} <<<LOCALITA>>>\\[3mm]
+  \textbf{Cliente:} <<<CLIENTE>>>\\
+  \textbf{Indirizzo intervento:} <<<INDIRIZZO_INTERVENTO>>>\\
+  \textbf{Data:} <<<DATA>>>
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.34\textwidth}
+  \raggedleft
+  \includegraphics[width=\linewidth]{logo.png}\\[2mm]
+  {\small
+  \textbf{EKO Impianti Elettrici di Edmond Xhani}\\
+  P. IVA: 04586400246\\
+  Email: ekoelettroimpianti@gmail.com\\
+  Telefono: +39 389 559 0563
+  }
+\end{minipage}
+
+\vspace{3mm}
+\textcolor{ekoTeal}{\rule{\textwidth}{0.8pt}}
+\vspace{2mm}
+
+% ====== Oggetto ======
+\textbf{Oggetto:} <<<OGGETTO>>>
+
+\vspace{2mm}
+
+
+% ====== Quadro economico ======
+\rowcolors{2}{rowGray}{white}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{6.2cm} Y R@{}}
+\toprule
+Voce & Descrizione & Importo \\
+\midrule
+
+<<<RIGHE>>>
+
+\midrule
+\multicolumn{2}{@{}l}{\textbf{<<<ETICHETTA_TOTALE>>>}} & \textbf{<<<TOTALE>>>} \\
+\bottomrule
+\end{tabularx}
+
+
+% ====== Note e condizioni ======
+
+<<<NOTE>>>
+
+
+% ====== Accettazione ======
+\vspace{4mm}
+\textcolor{ekoTeal}{\rule{\textwidth}{0.8pt}}
+\vspace{2mm}
+
+\noindent
+Per accettazione:\hfill Data:\rule{3cm}{0.4pt}
+
+\vspace{6mm}
+
+\begin{minipage}{0.55\textwidth}
+\textbf{Firma del Cliente}\\[12mm]
+\rule{7cm}{0.4pt}
+\end{minipage}
+\hfill
+\begin{minipage}{0.40\textwidth}
+\raggedleft
+\textbf{EKO Impianti Elettrici di Edmond Xhani}\\[12mm]
+\rule{6.5cm}{0.4pt}
+\end{minipage}
+
+\end{document}
