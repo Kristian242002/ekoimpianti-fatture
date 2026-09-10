@@ -10,7 +10,13 @@ import { z } from "zod";
  */
 
 const NOTE_DI_DEFAULT = [
-  "La presente costituisce una \\textbf{stima preliminare non vincolante}, redatta sulla base delle informazioni disponibili al momento.",
+  "La presente costituisce una stima preliminare non vincolante, redatta sulla base delle informazioni disponibili al momento.",
+  "L'avvio dei lavori sarà subordinato all'avvenuta ricezione della prima rata e alla conferma scritta dell'accettazione.",
+  "L'importo finale potrà subire variazioni esclusivamente in caso di richieste aggiuntive, imprevisti tecnici o modifiche concordate per iscritto con il cliente.",
+  "Restano esclusi dal presente documento eventuali ripristini edili, tinteggiature o lavorazioni non strettamente elettriche, che saranno oggetto di quotazione separata.",
+  "Il cliente garantisce la piena disponibilità e l'accesso ai locali oggetto dell'intervento per tutta la durata dei lavori.",
+  "Eventuali ritardi dovuti a cause di forza maggiore, indisponibilità dei materiali o impedimenti non imputabili all'installatore non comporteranno penali o richieste di risarcimento.",
+  "Il presente documento ha validità esclusivamente per l'intervento descritto e non costituisce impegno contrattuale fino all'accettazione formale da parte del cliente.",
 ];
 
 /** Free text that ends up inside the .tex — length-capped as a compile-safety measure. */

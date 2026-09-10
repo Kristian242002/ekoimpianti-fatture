@@ -1,0 +1,5 @@
+sudo dnf install texlive-lastpage texlive-hyperref texlive-xcolor \
+  texlive-tabularx texlive-helvetic texlive-fancyhdr texlive-booktabs \
+  texlive-geometry texlive-babel-italian
+
+  sudo dnf install texlive-lastpage
