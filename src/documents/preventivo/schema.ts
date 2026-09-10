@@ -9,7 +9,7 @@ import { z } from "zod";
  * wording on the printed document); everything else is English.
  */
 
-const NOTE_DI_DEFAULT = [
+export const NOTE_DI_DEFAULT = [
   "La presente costituisce una stima preliminare non vincolante, redatta sulla base delle informazioni disponibili al momento.",
   "L'avvio dei lavori sarà subordinato all'avvenuta ricezione della prima rata e alla conferma scritta dell'accettazione.",
   "L'importo finale potrà subire variazioni esclusivamente in caso di richieste aggiuntive, imprevisti tecnici o modifiche concordate per iscritto con il cliente.",
@@ -51,3 +51,5 @@ export const preventivoSchema = z.object({
 
 export type Riga = z.infer<typeof rigaSchema>;
 export type Preventivo = z.infer<typeof preventivoSchema>;
+/** Pre-defaults shape: what the form holds before Zod fills the blanks. */
+export type PreventivoInput = z.input<typeof preventivoSchema>;

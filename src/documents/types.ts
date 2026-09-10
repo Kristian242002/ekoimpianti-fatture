@@ -1,4 +1,5 @@
 import type { ZodType } from "zod";
+import type { FieldDescriptor } from "./preventivo/fields";
 
 /**
  * A document type is the sum of three things: which fields exist (schema),
@@ -9,11 +10,14 @@ export type DocumentType<T = unknown> = {
   id: string;
   label: string;
   schema: ZodType<T>;
+  /** Presentation metadata only: what is valid lives in the schema. */
+  fields: FieldDescriptor[];
   engine: "latex" | "pdf-form";
   render: (data: T) => Promise<Buffer>;
   /** Filename shown to the user, without extension. */
   filename: (data: T) => string;
 };
+
 /**
  * Type-erased view of a DocumentType, for code that handles any document
  * without knowing which one. `parse` replaces direct access to `schema`:
@@ -24,6 +28,7 @@ export type AnyDocumentType = {
   id: string;
   label: string;
   engine: DocumentType["engine"];
+  fields: FieldDescriptor[];
   parse: (input: unknown) =>
     | { success: true; data: ParsedDocument }
     | { success: false; issues: unknown[] };
@@ -41,6 +46,7 @@ export function erase<T>(documentType: DocumentType<T>): AnyDocumentType {
     id: documentType.id,
     label: documentType.label,
     engine: documentType.engine,
+    fields: documentType.fields,
     parse: (input) => {
       const result = documentType.schema.safeParse(input);
       return result.success
