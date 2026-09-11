@@ -3,7 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-
+import { useWatch } from "react-hook-form";
+import { PdfPreview } from "./PdfPreview";
+import { usePdfPreview } from "./usePdfPreview";
 import { preventivoFields } from "@/documents/preventivo/fields";
 import {
   preventivoSchema,
@@ -41,6 +43,10 @@ export function PreventivoEditor() {
     defaultValues: initialValues(),
     mode: "onBlur",
   });
+  // useWatch instead of form.watch(): it subscribes without re-rendering the
+  // whole form tree on every keystroke.
+  const dati = useWatch({ control: form.control });
+  const anteprima = usePdfPreview("preventivo", dati);
 
   async function scarica(dati: Preventivo) {
     setErrore(null);
@@ -91,26 +97,31 @@ function initialValues(): PreventivoInput {
     note: NOTE_DI_DEFAULT,
   };
 }
-  return (
+   return (
     <FormProvider {...form}>
-      {/* No <form> element: submitting is an explicit button action. */}
-      <div className="space-y-6">
-        <DynamicForm fields={preventivoFields} />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="space-y-6">
+          <DynamicForm fields={preventivoFields} />
 
-        {errore && (
-          <p className="whitespace-pre-line rounded border border-red-300 bg-red-50 p-3 text-sm text-red-800">
-            {errore}
-          </p>
-        )}
+          {errore && (
+            <p className="whitespace-pre-line rounded border border-red-300 bg-red-50 p-3 text-sm text-red-800">
+              {errore}
+            </p>
+          )}
 
-        <button
-          type="button"
-          onClick={form.handleSubmit(scarica)}
-          disabled={inCorso}
-          className="rounded bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800 disabled:opacity-50"
-        >
-          {inCorso ? "Generazione in corso…" : "Genera PDF"}
-        </button>
+          <button
+            type="button"
+            onClick={form.handleSubmit(scarica)}
+            disabled={inCorso}
+            className="rounded bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800 disabled:opacity-50"
+          >
+            {inCorso ? "Generazione in corso…" : "Genera PDF"}
+          </button>
+        </div>
+
+        <div className="lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)]">
+          <PdfPreview {...anteprima} />
+        </div>
       </div>
     </FormProvider>
   );

@@ -7,6 +7,7 @@ import { erase, type AnyDocumentType } from "./types";
  */
 const REGISTRY: Record<string, AnyDocumentType> = {
   [preventivo.id]: erase(preventivo),
+  
 };
 
 export function getDocumentType(id: string): AnyDocumentType | undefined {

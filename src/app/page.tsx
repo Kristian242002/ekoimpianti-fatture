@@ -4,7 +4,7 @@ import { PreventivoEditor } from "@/components/PreventivoEditor";
  *  confined to the editor below. */
 export default function Home() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
+    <main className="mx-auto max-w-7xl px-6 py-10">
       <h1 className="mb-6 text-xl font-semibold text-teal-800">
         Generatore documenti EKO
       </h1>

@@ -11,4 +11,8 @@ export const preventivo: DocumentType<Preventivo> = {
   engine: "latex",
   render: renderPreventivo,
   filename: preventivoFilename,
+  cliente: (data) => ({
+    nome: data.cliente,
+    indirizzo: data.indirizzoIntervento,
+  }),
 };
