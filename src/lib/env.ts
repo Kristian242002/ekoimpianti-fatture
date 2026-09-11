@@ -12,7 +12,6 @@ function int(name: string, fallback: number): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
 
-export const DATA_DIR = dir("DATA_DIR", "dati");
 export const TEMPLATES_DIR = dir("TEMPLATES_DIR", "src/documents");
 export const LATEX_TIMEOUT_MS = int("LATEX_TIMEOUT_MS", 10_000);
 

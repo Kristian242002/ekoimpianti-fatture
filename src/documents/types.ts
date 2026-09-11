@@ -5,9 +5,6 @@ import type { FieldDescriptor } from "./preventivo/fields";
  *  trades a correct page count for half the compile time. */
 export type RenderOptions = { passes?: number };
 
-/** Client identity a document carries, for the silent upsert on generation. */
-export type ClienteRef = { nome: string; indirizzo: string };
-
 /**
  * A document type is the sum of three things: which fields exist (schema),
  * how they become a PDF (render), and how it is labelled in the UI.
@@ -23,8 +20,6 @@ export type DocumentType<T = unknown> = {
   render: (data: T, options?: RenderOptions) => Promise<Buffer>;
   /** Filename shown to the user, without extension. */
   filename: (data: T) => string;
-  /** Undefined where the document has no client attached. */
-  cliente?: (data: T) => ClienteRef | null;
 };
 
 /**
@@ -43,7 +38,6 @@ export type AnyDocumentType = {
     | { success: false; issues: unknown[] };
   render: (data: ParsedDocument, options?: RenderOptions) => Promise<Buffer>;
   filename: (data: ParsedDocument) => string;
-  cliente?: (data: ParsedDocument) => ClienteRef | null;
 };
 
 /** Opaque: only produced by parse, only consumed by render and filename. */
@@ -52,8 +46,6 @@ export type ParsedDocument = { readonly __parsed: unique symbol };
 /** Erases the generic parameter. The casts are confined here, and they are
  *  sound because parse is the only way to obtain a ParsedDocument. */
 export function erase<T>(documentType: DocumentType<T>): AnyDocumentType {
-  const cliente = documentType.cliente;
-
   return {
     id: documentType.id,
     label: documentType.label,
@@ -68,6 +60,5 @@ export function erase<T>(documentType: DocumentType<T>): AnyDocumentType {
     render: (data, options) =>
       documentType.render(data as unknown as T, options),
     filename: (data) => documentType.filename(data as unknown as T),
-    cliente: cliente ? (data) => cliente(data as unknown as T) : undefined,
   };
 }

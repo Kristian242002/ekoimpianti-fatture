@@ -31,44 +31,42 @@ export function PdfPreview({ url, loading, errore }: PreviewState) {
   }, [url]);
 
   return (
-    <div className="relative h-full min-h-[600px] rounded border border-slate-300 bg-slate-100">
-      {url ? (
-        <iframe
-          ref={frame}
-          src={`${url}#toolbar=1&navpanes=0`}
-          title="Anteprima documento"
-          className="h-full w-full rounded"
-        />
-      ) : (
-        <p className="flex h-full items-center justify-center text-sm text-slate-500">
-          Compila il form per vedere l&apos;anteprima
-        </p>
-      )}
-
-      {loading && (
-        <span className="absolute right-3 top-3 rounded bg-slate-900/75 px-2 py-1 text-xs text-white">
-          Aggiornamento…
+    <div className="flex h-full flex-col">
+      <div className="mb-2 flex h-5 items-center justify-between text-xs text-muted">
+        <span>Anteprima</span>
+        <span className="flex items-center gap-3">
+          {loading && <span className="text-teal">Aggiornamento</span>}
+          {errore && <span className="text-amber-700">{errore}</span>}
+          <label className="flex items-center gap-1.5">
+            Pagina
+            <input
+              type="number"
+              min={1}
+              defaultValue={1}
+              onChange={(event) => {
+                scroll.current = Number(event.target.value) || 1;
+              }}
+              className="tabular w-11 rounded-sm border border-line bg-surface px-1 py-0.5 text-right outline-none focus:border-gold"
+            />
+          </label>
         </span>
-      )}
+      </div>
 
-      {errore && (
-        <span className="absolute bottom-3 left-3 right-3 rounded bg-amber-100 px-2 py-1 text-xs text-amber-900">
-          {errore}
-        </span>
-      )}
-
-      <label className="absolute bottom-3 right-3 flex items-center gap-1 rounded bg-white/90 px-2 py-1 text-xs text-slate-600">
-        Pagina
-        <input
-          type="number"
-          min={1}
-          defaultValue={1}
-          onChange={(event) => {
-            scroll.current = Number(event.target.value) || 1;
-          }}
-          className="w-12 rounded border border-slate-300 px-1 text-right"
-        />
-      </label>
+      {/* The document is the only lifted object on the page. */}
+      <div className="min-h-0 flex-1 bg-surface shadow-[0_1px_2px_rgba(20,38,42,0.08),0_8px_24px_-8px_rgba(20,38,42,0.18)]">
+        {url ? (
+          <iframe
+            ref={frame}
+            src={`${url}#toolbar=1&navpanes=0`}
+            title="Anteprima documento"
+            className="h-full w-full"
+          />
+        ) : (
+          <p className="flex h-full items-center justify-center px-8 text-center text-sm text-muted">
+            Compila il form e l&apos;anteprima comparirà qui.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

@@ -2,7 +2,12 @@
 
 import { useFieldArray, useFormContext } from "react-hook-form";
 
-export function RigheEditor({ label }: { label: string }) {
+const CELL =
+  "rounded-sm border border-line bg-surface px-2.5 py-1.5 text-sm text-ink " +
+  "placeholder:text-muted/50 outline-none transition-colors " +
+  "focus:border-gold focus:ring-2 focus:ring-gold/25";
+
+export function RigheEditor() {
   const { register, control, formState } = useFormContext();
   const { fields, append, remove } = useFieldArray({ control, name: "righe" });
 
@@ -11,42 +16,47 @@ export function RigheEditor({ label }: { label: string }) {
     | undefined;
 
   return (
-    <fieldset className="space-y-2">
-      <legend className="text-sm font-medium text-slate-700">{label}</legend>
+    <div className="space-y-2">
+      <div className="grid grid-cols-[1fr_2fr_7rem_1.75rem] gap-2 text-xs text-muted">
+        <span>Voce</span>
+        <span>Descrizione</span>
+        <span className="text-right">Importo</span>
+        <span />
+      </div>
 
       {fields.map((field, index) => (
-        <div key={field.id} className="grid grid-cols-12 gap-2">
-          <input
-            {...register(`righe.${index}.voce`)}
-            placeholder={`Voce ${index + 1}`}
-            className="col-span-3 rounded border border-slate-300 px-2 py-1 text-sm"
-          />
-          <input
-            {...register(`righe.${index}.descrizione`)}
-            placeholder="Descrizione"
-            className="col-span-6 rounded border border-slate-300 px-2 py-1 text-sm"
-          />
-          {/* valueAsNumber: without it the input hands Zod a string and
-              z.number() rejects every row. */}
-          <input
-            {...register(`righe.${index}.importo`, { valueAsNumber: true })}
-            type="number"
-            step="0.01"
-            placeholder="0,00"
-            className="col-span-2 rounded border border-slate-300 px-2 py-1 text-right text-sm"
-          />
-          <button
-            type="button"
-            onClick={() => remove(index)}
-            disabled={fields.length === 1}
-            className="col-span-1 rounded text-slate-400 hover:text-red-600 disabled:opacity-30"
-            aria-label="Rimuovi riga"
-          >
-            ✕
-          </button>
+        <div key={field.id} className="space-y-1">
+          <div className="grid grid-cols-[1fr_2fr_7rem_1.75rem] gap-2">
+            <input
+              {...register(`righe.${index}.voce`)}
+              placeholder={`Voce ${index + 1}`}
+              className={CELL}
+            />
+            <input
+              {...register(`righe.${index}.descrizione`)}
+              className={CELL}
+            />
+            {/* valueAsNumber: without it the input hands Zod a string and
+                z.number() rejects every row. */}
+            <input
+              {...register(`righe.${index}.importo`, { valueAsNumber: true })}
+              type="number"
+              step="0.01"
+              className={`${CELL} tabular text-right`}
+            />
+            <button
+              type="button"
+              onClick={() => remove(index)}
+              disabled={fields.length === 1}
+              className="rounded-sm text-muted/60 transition-colors hover:text-red-700 disabled:opacity-25"
+              aria-label={`Rimuovi riga ${index + 1}`}
+            >
+              ✕
+            </button>
+          </div>
 
           {errors?.[index] && (
-            <p className="col-span-12 text-xs text-red-600">
+            <p className="text-xs text-red-700">
               {Object.values(errors[index] ?? {})
                 .map((e) => e?.message)
                 .filter(Boolean)
@@ -59,10 +69,10 @@ export function RigheEditor({ label }: { label: string }) {
       <button
         type="button"
         onClick={() => append({ voce: "", descrizione: "", importo: 0 })}
-        className="text-sm text-teal-700 hover:underline"
+        className="text-sm font-medium text-teal transition-colors hover:text-teal-deep"
       >
-        + Aggiungi riga
+        Aggiungi riga
       </button>
-    </fieldset>
+    </div>
   );
 }

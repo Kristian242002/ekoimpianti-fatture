@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getDocumentType } from "@/documents";
 import { LatexCompileError } from "@/lib/latex/compile";
-import { upsertCliente } from "@/lib/storage/clienti";
+
 
 /** pdflatex is a child process: this route can never be static or edge. */
 export const runtime = "nodejs";
@@ -36,15 +36,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Silent upsert: the client record is kept up to date as a side effect of
-    // generating, so the user never has to remember to save an address book
-    // entry. Failure here must not block the PDF.
-    const anagrafica = documentType.cliente?.(parsed.data);
-    if (anagrafica?.nome) {
-      await upsertCliente(anagrafica).catch((cause) =>
-        console.error("client upsert failed", cause),
-      );
-    }
+  
 
     const pdf = await documentType.render(parsed.data);
 

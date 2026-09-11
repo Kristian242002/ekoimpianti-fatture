@@ -97,14 +97,14 @@ function initialValues(): PreventivoInput {
     note: NOTE_DI_DEFAULT,
   };
 }
-   return (
+    return (
     <FormProvider {...form}>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="space-y-6">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="space-y-8">
           <DynamicForm fields={preventivoFields} />
 
           {errore && (
-            <p className="whitespace-pre-line rounded border border-red-300 bg-red-50 p-3 text-sm text-red-800">
+            <p className="whitespace-pre-line border-l-2 border-red-700 bg-red-50 px-3 py-2 text-sm text-red-900">
               {errore}
             </p>
           )}
@@ -113,13 +113,13 @@ function initialValues(): PreventivoInput {
             type="button"
             onClick={form.handleSubmit(scarica)}
             disabled={inCorso}
-            className="rounded bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800 disabled:opacity-50"
+            className="rounded-sm bg-teal px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-teal-deep focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 disabled:opacity-40"
           >
-            {inCorso ? "Generazione in corso…" : "Genera PDF"}
+            {inCorso ? "Generazione in corso" : "Genera PDF"}
           </button>
         </div>
 
-        <div className="lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)]">
+        <div className="lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)]">
           <PdfPreview {...anteprima} />
         </div>
       </div>

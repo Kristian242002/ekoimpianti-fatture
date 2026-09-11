@@ -1,13 +1,15 @@
 import { PreventivoEditor } from "@/components/PreventivoEditor";
 
-/** Server Component: it only lays out the page. All interactivity is
- *  confined to the editor below. */
 export default function Home() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-10">
-      <h1 className="mb-6 text-xl font-semibold text-teal-800">
-        Generatore documenti EKO
-      </h1>
+    <main className="mx-auto min-h-screen max-w-7xl px-6 py-8">
+      <header className="mb-8 flex items-baseline justify-between border-b-2 border-teal pb-3">
+        <h1 className="text-lg font-semibold text-teal">
+          EKO Impianti Elettrici
+        </h1>
+        <p className="text-sm text-muted">Preventivo</p>
+      </header>
+
       <PreventivoEditor />
     </main>
   );
