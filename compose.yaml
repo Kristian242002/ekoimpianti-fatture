@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    image: eko
+    ports:
+      # Bound to loopback: the app has no authentication by design.
+      - "127.0.0.1:3000:3000"
+    environment:
+      LATEX_TIMEOUT_MS: "10000"
+
+    # Hardening that matters because pdflatex parses user input.
+    read_only: true
+    tmpfs:
+      - /tmp:size=256m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    # The 10s timeout already bounds a runaway \def; these bound the damage
+    # if it ever fails.
+    cpus: "1.0"
+    mem_limit: 1g
+
+    restart: unless-stopped
